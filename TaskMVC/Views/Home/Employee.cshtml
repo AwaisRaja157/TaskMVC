@@ -1,0 +1,118 @@
+﻿@using TaskMVC.Models;
+@{
+    ViewBag.Title = "Employee";
+
+    Employee employee = ViewBag.Employee as Employee;
+   
+
+
+    List<Employee> Employee = ViewBag.M as List<Employee>;
+}
+
+<h2>Employee</h2>
+
+
+<form action="@Url.Action("Employee","Home")" method="post">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Name</label>
+                <input class="form-control" name="Name" value="@employee.Name"/>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Salary</label>
+                <input class="form-control" name="Salary" value="@employee.Salary"/>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>PocketMoney</label>
+                <input class="form-control" name="PocketMoney" value="@employee.PocketMoney"/>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>GPA</label>
+                <input class="form-control" name="GPA" value="@employee.GPA"/>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>NDouble</label>
+                <input class="form-control" name="NDouble" value="@employee.NDouble"/>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>TimeStamp</label>
+                <input class="form-control" name="TimeStamp" value="@employee.TimeStamp"/>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>DateOfBirth</label>
+                <input class="form-control" name="DateOfBirth" value="@employee.DateOfBirth"/>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>UrduName</label>
+                <input class="form-control" name="UrduName" value="@employee.UrduName"/>
+            </div>
+        </div>
+
+    </div>
+    <div class="pull-right">
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </div>
+
+</form>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Salary</th>
+            <th>PocketMoney</th>
+            <th>NDouble</th>
+            <th>GPA</th>
+            <th>TimeStamp</th>
+            <th>DateOfBirth</th>
+            <th>UrduName</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var element in Employee)
+         {
+            <tr>
+                <td>@element.Name</td>
+                <td>@element.Salary</td>
+                <td>@element.PocketMoney</td>
+                <td>@element.NDouble</td>
+                <td>@element.GPA</td>
+                <td>@element.TimeStamp</td>
+                <td>@element.DateOfBirth</td>
+                <td>@element.UrduName</td>
+                <td>
+                    <a href="@Url.Action("Employee","Home" , new { ID = employee.ID })"><i class="glyphicon glyphicon-pencil"></i></a>
+                    <form action="@Url.Action("DeleteEmployee", "Home" , new { ID = employee.ID })" method="post">
+                        <button type="submit"><i class="glyphicon glyphicon-trash text-danger"></i></button>
+
+                    </form>
+                </td>
+            </tr>
+         }
+
+    </tbody>
+
+</table>
+
