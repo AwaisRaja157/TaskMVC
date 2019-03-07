@@ -5,11 +5,20 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TaskMVC.Models;
+using TaskMVC.Repositories;
 
 namespace TaskMVC.Controllers
 {
     public class HomeController : Controller
     {
+        public EmployeeRepository EmpRepo { get; set; }
+
+        public HomeController()
+        {
+            this.EmpRepo = new EmployeeRepository();
+        }
+
+
         [HttpGet]
         public ActionResult Index()
         {
@@ -19,11 +28,11 @@ namespace TaskMVC.Controllers
         [HttpGet]
         public ActionResult Employee(int? ID)
         {
-            ViewBag.M = Models.Employee.GetList();
+            ViewBag.M = EmpRepo.GetList();
             Employee employee = new Employee();
             if (ID != null)
             {
-                employee = Models.Employee.Get((int)ID);
+                employee = EmpRepo.Get((int)ID);
             }
             else
             {
@@ -38,11 +47,11 @@ namespace TaskMVC.Controllers
         {
             if(employee.ID == 0)
             {
-                Models.Employee.Insert(employee);
+                EmpRepo.Insert(employee);
             }
             else
             {
-                Models.Employee.Update(employee);
+                EmpRepo.Update(employee);
             }
             return RedirectToAction("Employee","Home");
         }
@@ -50,7 +59,7 @@ namespace TaskMVC.Controllers
         [HttpPost]
         public ActionResult DeleteEmployee(int ID)
         {
-            Models.Employee.Delete(ID);
+            EmpRepo.Delete(ID);
             return RedirectToAction("Employee", "Home");
 
 
