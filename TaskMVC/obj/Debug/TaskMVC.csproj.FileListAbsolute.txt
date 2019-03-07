@@ -20,3 +20,26 @@ c:\users\muhammad awais\source\repos\TaskMVC\TaskMVC\obj\Debug\TaskMVC.csprojRes
 c:\users\muhammad awais\source\repos\TaskMVC\TaskMVC\obj\Debug\TaskMVC.csproj.CoreCompileInputs.cache
 c:\users\muhammad awais\source\repos\TaskMVC\TaskMVC\obj\Debug\TaskMVC.dll
 c:\users\muhammad awais\source\repos\TaskMVC\TaskMVC\obj\Debug\TaskMVC.pdb
+C:\Users\Zawar\source\repos\TaskMVC\TaskMVC-master\TaskMVC\obj\Debug\TaskMVC.csprojResolveAssemblyReference.cache
+C:\Users\Zawar\source\repos\TaskMVC\TaskMVC-master\TaskMVC\obj\Debug\TaskMVC.csproj.CoreCompileInputs.cache
+C:\Users\Zawar\source\repos\TaskMVC\TaskMVC-master\TaskMVC\obj\Debug\TaskMVC.dll
+C:\Users\Zawar\source\repos\TaskMVC\TaskMVC-master\TaskMVC\obj\Debug\TaskMVC.pdb
+C:\Users\Zawar\source\repos\TaskMVC\TaskMVC-master\TaskMVC\bin\TaskMVC.dll.config
+C:\Users\Zawar\source\repos\TaskMVC\TaskMVC-master\TaskMVC\bin\TaskMVC.dll
+C:\Users\Zawar\source\repos\TaskMVC\TaskMVC-master\TaskMVC\bin\TaskMVC.pdb
+C:\Users\Zawar\source\repos\TaskMVC\TaskMVC-master\TaskMVC\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\Zawar\source\repos\TaskMVC\TaskMVC-master\TaskMVC\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\Zawar\source\repos\TaskMVC\TaskMVC-master\TaskMVC\bin\System.Web.Helpers.dll
+C:\Users\Zawar\source\repos\TaskMVC\TaskMVC-master\TaskMVC\bin\System.Web.Mvc.dll
+C:\Users\Zawar\source\repos\TaskMVC\TaskMVC-master\TaskMVC\bin\System.Web.Razor.dll
+C:\Users\Zawar\source\repos\TaskMVC\TaskMVC-master\TaskMVC\bin\System.Web.Webpages.Deployment.dll
+C:\Users\Zawar\source\repos\TaskMVC\TaskMVC-master\TaskMVC\bin\System.Web.Webpages.dll
+C:\Users\Zawar\source\repos\TaskMVC\TaskMVC-master\TaskMVC\bin\System.Web.Webpages.Razor.dll
+C:\Users\Zawar\source\repos\TaskMVC\TaskMVC-master\TaskMVC\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\Zawar\source\repos\TaskMVC\TaskMVC-master\TaskMVC\bin\System.Web.Razor.xml
+C:\Users\Zawar\source\repos\TaskMVC\TaskMVC-master\TaskMVC\bin\System.Web.Webpages.xml
+C:\Users\Zawar\source\repos\TaskMVC\TaskMVC-master\TaskMVC\bin\System.Web.Webpages.Deployment.xml
+C:\Users\Zawar\source\repos\TaskMVC\TaskMVC-master\TaskMVC\bin\System.Web.Webpages.Razor.xml
+C:\Users\Zawar\source\repos\TaskMVC\TaskMVC-master\TaskMVC\bin\System.Web.Helpers.xml
+C:\Users\Zawar\source\repos\TaskMVC\TaskMVC-master\TaskMVC\bin\System.Web.Mvc.xml
+C:\Users\Zawar\source\repos\TaskMVC\TaskMVC-master\TaskMVC\obj\Debug\TaskMVC.csproj.CopyComplete
