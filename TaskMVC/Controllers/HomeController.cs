@@ -2,14 +2,23 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using TaskMVC.Models;
+using TaskMVC.Repositories;
 
 namespace TaskMVC.Controllers
 {
     public class HomeController : Controller
     {
+        public EmployeeRepository EmpRepo { get; set; }
+
+
+        public HomeController()
+        {
+            this.EmpRepo = new EmployeeRepository();
+        }
         [HttpGet]
         public ActionResult Index()
         {
@@ -19,11 +28,11 @@ namespace TaskMVC.Controllers
         [HttpGet]
         public ActionResult Employee(int? ID)
         {
-            ViewBag.M = Models.Employee.GetList();
+            ViewBag.M = this.EmpRepo.GetList();
             Employee employee = new Employee();
             if (ID != null)
             {
-                employee = Models.Employee.Get((int)ID);
+                employee = this.EmpRepo.Get((int)ID);
             }
             else
             {
@@ -36,24 +45,41 @@ namespace TaskMVC.Controllers
         [HttpPost]
         public ActionResult Employee(Employee employee)
         {
+            if (IsValid(employee))
+            {
+            }
+
+
             if(employee.ID == 0)
             {
-                Models.Employee.Insert(employee);
+                this.EmpRepo.Insert(employee);
             }
             else
             {
-                Models.Employee.Update(employee);
+                this.EmpRepo.Update(employee);
             }
             return RedirectToAction("Employee","Home");
+        }
+
+        private bool IsValid(Employee employee)
+        {
+            Regex regex = new Regex("/^[A-Z]+$/i");
+            if (regex.Match(employee.Name).Success)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
 
         [HttpPost]
         public ActionResult DeleteEmployee(int ID)
         {
-            Models.Employee.Delete(ID);
+            this.EmpRepo.Delete(ID);
             return RedirectToAction("Employee", "Home");
-
-
         }
     }
 }
