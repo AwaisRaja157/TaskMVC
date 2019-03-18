@@ -1,0 +1,37 @@
+un se kaho ke meeran ne code apny pas bi rkha hua h wo pngy dal skta h code me bad me bi
+
+70 to 80 btaya kro yar o_o
+
+C# ->
+OOP --->
+Repository Pattern
+Dependency Injection <-
+Collections
+Generics
+Reflection
+Delegates
+Events
+Extension Methods
+LINQ
+Nullable Types
+dynamic
+Asynchrnous await
+
+Sql server
+JOIN<-
+Normalization <-
+Procedure
+Views
+Triggers
+SubQuery
+ALTER TABLE
+
+IN 
+NOT IN
+Like
+Exists
+GROUP BY
+
+JQuery, Bootstrap
+Ajax
+Json

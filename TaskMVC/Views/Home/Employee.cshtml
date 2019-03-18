@@ -8,9 +8,17 @@
 
     List<Employee> Employee = ViewBag.M as List<Employee>;
 }
+
 <h2>Employee</h2>
 
-<form action="@Url.Action("Employee","Home")" method="post">
+
+@if (TempData["Error"] != null)
+{
+    @Html.Raw(TempData["Error"])
+
+}
+
+<form action="@Url.Action("Employee","Home")" method="post" id="MyForm">
     <div class="row">
         <div class="col-md-3">
             <div class="form-group">
@@ -55,7 +63,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label>DateOfBirth</label>
-                <input class="form-control" name="DateOfBirth" value="@employee.DateOfBirth" />
+                <input class="form-control" name="DateOfBirth" type="date" value="@employee.DateOfBirth" />
             </div>
         </div>
 
@@ -67,7 +75,7 @@
         </div>
     </div>
     <div class="pull-right">
-        <button class="btn btn-primary" type="button" id="SubmitForm">Submit</button>
+        <button class="btn btn-primary" type="submit" id="SubmitForm">Submit</button>
     </div>
 </form>
 <table class="table table-bordered">
@@ -112,16 +120,71 @@
     <script>
         $(function () {
 
-            $("#SubmitForm").click(function () {
+
+            $("#MyForm").validate({
+                rules: {
+                    Name: {
+                        required: true,
+                        maxlength: 50
+                    }
+                  
+                },
+                messages: {
+                    Name: {
+                        required : 'Name is required',
+                    }
+
+                }
+
+
+
+            });
+
+
+
+
+            @*$("#SubmitForm").click(function () {
                 var Name = $("#Name").val();
                 if ((/^[A-Z]+$/i).test(Name)) {
                     $("#NameLabel").html("");
+                    //$("#SubmitForm").submit();
+
+
+                    var User = {
+                        Name: $("#Name").val(),
+                        Salary: $("#Salary").val(),
+                        PocketMoney: $("#PocketMoney").val(),
+                        GPA : $("#GPA").val()
+                    }
+
+
+                    $.ajax({
+                        url: "@Url.Action("Employee", "Home")",
+                        method: "POST",
+                        data: {
+                            employee : User
+                        },
+                        success: function (resp) {
+                            console.log("submited" + resp);
+                        },
+                        error: function (error) {
+                            console.log("submitted" + error);
+                        }
+                    });
 
                 } else {
                     $("#NameLabel").html("Name is invalid");
                 }
 
-            });
+            });*@
+
+
+
+
+
+
+
+
         });
     </script>
 

@@ -45,35 +45,25 @@ namespace TaskMVC.Controllers
         [HttpPost]
         public ActionResult Employee(Employee employee)
         {
-            if (IsValid(employee))
+            if (!ModelState.IsValid)
             {
-            }
-
-
-            if(employee.ID == 0)
-            {
-                this.EmpRepo.Insert(employee);
+                ViewBag.Error = "Employee is Not valid";
             }
             else
             {
-                this.EmpRepo.Update(employee);
+                if (employee.ID == 0)
+                {
+                    this.EmpRepo.Insert(employee);
+                }
+                else
+                {
+                    this.EmpRepo.Update(employee);
+                }
             }
+            
             return RedirectToAction("Employee","Home");
         }
 
-        private bool IsValid(Employee employee)
-        {
-            Regex regex = new Regex("/^[A-Z]+$/i");
-            if (regex.Match(employee.Name).Success)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-
-        }
 
         [HttpPost]
         public ActionResult DeleteEmployee(int ID)
