@@ -34,10 +34,11 @@ namespace TaskMVC.Repositories
            ,'{employee.TimeStamp}'
            ,'{employee.DateOfBirth}'
            ,N'{employee.UrduName}'
-)";
+); SELECT SCOPE_IDENTITY();";
             con.Open();
             SqlCommand cmd = new SqlCommand(query, con);
-            cmd.ExecuteNonQuery();
+            int ID = Convert.ToInt32(cmd.ExecuteScalar());
+            employee.ID = ID;
             con.Close();
             return true;
         }

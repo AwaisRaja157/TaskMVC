@@ -4,6 +4,14 @@
 
     Employee employee = ViewBag.Employee as Employee;
 
+    employee.Name = "Zawar";
+    employee.DateOfBirth = DateTime.Now.AddYears(-25);
+    employee.GPA = 3;
+    employee.NDouble = 3.0;
+    employee.PocketMoney = 300000;
+    employee.Salary = 70000;
+    employee.TimeStamp = DateTime.Now;
+    employee.UrduName = "Zawar";
 
 
     List<Employee> Employee = ViewBag.M as List<Employee>;
@@ -30,19 +38,19 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label>Salary</label>
-                <input class="form-control" name="Salary" value="@employee.Salary" />
+                <input class="form-control" name="Salary" id="Salary" value="@employee.Salary" />
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
                 <label>PocketMoney</label>
-                <input class="form-control" name="PocketMoney" value="@employee.PocketMoney" />
+                <input class="form-control" name="PocketMoney" id="PocketMoney" value="@employee.PocketMoney" />
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
                 <label>GPA</label>
-                <input class="form-control" name="GPA" value="@employee.GPA" />
+                <input class="form-control" name="GPA" id="GPA" value="@employee.GPA" />
             </div>
         </div>
     </div>
@@ -50,32 +58,32 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label>NDouble</label>
-                <input class="form-control" name="NDouble" value="@employee.NDouble" />
+                <input class="form-control" name="NDouble" id="NDouble" value="@employee.NDouble" />
             </div>
         </div>
 
         <div class="col-md-3">
             <div class="form-group">
                 <label>TimeStamp</label>
-                <input class="form-control" name="TimeStamp" value="@employee.TimeStamp" />
+                <input class="form-control" name="TimeStamp" id="TimeStamp" value="@employee.TimeStamp" />
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
                 <label>DateOfBirth</label>
-                <input class="form-control" name="DateOfBirth" type="date" value="@employee.DateOfBirth" />
+                <input class="form-control" name="DateOfBirth" id="DateOfBirth" type="date" value="@employee.DateOfBirth" />
             </div>
         </div>
 
         <div class="col-md-3">
             <div class="form-group">
                 <label>UrduName</label>
-                <input class="form-control" name="UrduName" value="@employee.UrduName" />
+                <input class="form-control" name="UrduName" id="UrduName" value="@employee.UrduName" />
             </div>
         </div>
     </div>
     <div class="pull-right">
-        <button class="btn btn-primary" type="submit" id="SubmitForm">Submit</button>
+        <button class="btn btn-primary" type="button" id="SubmitForm">Submit</button>
     </div>
 </form>
 <table class="table table-bordered">
@@ -92,7 +100,7 @@
             <th>Action</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="TableBody">
         @foreach (var element in Employee)
         {
             <tr>
@@ -105,8 +113,8 @@
                 <td>@element.DateOfBirth</td>
                 <td>@element.UrduName</td>
                 <td>
-                    <a href="@Url.Action("Employee","Home" , new { ID = employee.ID })"><i class="glyphicon glyphicon-pencil"></i></a>
-                    <form action="@Url.Action("DeleteEmployee", "Home" , new { ID = employee.ID })" method="post">
+                    <a href="@Url.Action("Employee","Home" , new { ID = element.ID })"><i class="glyphicon glyphicon-pencil"></i></a>
+                    <form action="@Url.Action("DeleteEmployee", "Home" , new { ID = element.ID })" method="post">
                         <button type="submit"><i class="glyphicon glyphicon-trash text-danger"></i></button>
                     </form>
                 </td>
@@ -133,57 +141,73 @@
                     Name: {
                         required : 'Name is required',
                     }
-
                 }
-
 
 
             });
 
 
+            function FormatDate(jsonDate) {
+                var date = new Date(parseInt(jsonDate.substr(6)));
+                return date;
+            }
 
 
-            @*$("#SubmitForm").click(function () {
-                var Name = $("#Name").val();
-                if ((/^[A-Z]+$/i).test(Name)) {
-                    $("#NameLabel").html("");
-                    //$("#SubmitForm").submit();
+            $("#SubmitForm").click(function () {
 
-
+                if ($("#MyForm").valid()) {
                     var User = {
                         Name: $("#Name").val(),
                         Salary: $("#Salary").val(),
                         PocketMoney: $("#PocketMoney").val(),
-                        GPA : $("#GPA").val()
+                        GPA: $("#GPA").val(),
+                        NDouble: $("#NDouble").val(),
+                        TimeStamp: $("#TimeStamp").val(),
+                        DateOfBirth: $("#DateOfBirth").val(),
+                        UrduName : $("#UrduName").val()
                     }
-
 
                     $.ajax({
                         url: "@Url.Action("Employee", "Home")",
-                        method: "POST",
+                        method: "POST", 
                         data: {
-                            employee : User
+                            employee: User
                         },
                         success: function (resp) {
-                            console.log("submited" + resp);
+                            console.log(resp);
+                            AddRow(resp);
                         },
-                        error: function (error) {
-                            console.log("submitted" + error);
+                        error: function (resp) {
+
                         }
                     });
-
-                } else {
-                    $("#NameLabel").html("Name is invalid");
                 }
-
-            });*@
-
+            });
 
 
+            function AddRow(element) {
+                var html = `
+     <tr>
+                <td>${element.Name}</td>
+                <td>${element.Salary}</td>
+                <td>${element.PocketMoney}</td>
+                <td>${element.NDouble}</td>
+                <td>${element.GPA}</td>
+                <td>${element.TimeStamp}</td>
+                <td>${FormatDate(element.DateOfBirth)}</td>
+                <td>${element.UrduName}</td>
+                <td>
+                    <a href="@Url.Action("Employee","Home")/${element.ID}"><i class="glyphicon glyphicon-pencil"></i></a>
+                    <form action="@Url.Action("DeleteEmployee", "Home")/${element.ID}" method="post">
+                        <button type="submit"><i class="glyphicon glyphicon-trash text-danger"></i></button>
+                    </form>
+                </td>
+            </tr>
 
+    `;
+                $("#TableBody").append(html);
 
-
-
+            }
 
         });
     </script>

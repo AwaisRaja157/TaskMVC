@@ -15,7 +15,7 @@ namespace TaskMVC.Models
 
         [Required]
         [StringLength(50)]
-        [RegularExpression("/^[A-Z]+$/i")]
+        //[RegularExpression("/^[A-Z]+$/i")]
         public String Name { get; set; }
 
         public int Salary { get; set; }

@@ -43,11 +43,11 @@ namespace TaskMVC.Controllers
         }
 
         [HttpPost]
-        public ActionResult Employee(Employee employee)
+        public JsonResult Employee(Employee employee)
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.Error = "Employee is Not valid";
+                 return Json("Employee is Not valid");
             }
             else
             {
@@ -60,8 +60,7 @@ namespace TaskMVC.Controllers
                     this.EmpRepo.Update(employee);
                 }
             }
-            
-            return RedirectToAction("Employee","Home");
+            return Json(this.EmpRepo.Get(employee.ID));
         }
 
 
