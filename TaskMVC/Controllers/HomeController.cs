@@ -45,21 +45,24 @@ namespace TaskMVC.Controllers
         [HttpPost]
         public JsonResult Employee(Employee employee)
         {
-            if (!ModelState.IsValid)
+            //if (!ModelState.IsValid)
+            //{
+            //     return Json("Employee is Not valid");
+            //}
+            //else
+            //{
+
+            //}
+
+            if (employee.ID == 0)
             {
-                 return Json("Employee is Not valid");
+                this.EmpRepo.Insert(employee);
             }
             else
             {
-                if (employee.ID == 0)
-                {
-                    this.EmpRepo.Insert(employee);
-                }
-                else
-                {
-                    this.EmpRepo.Update(employee);
-                }
+                this.EmpRepo.Update(employee);
             }
+
             return Json(this.EmpRepo.Get(employee.ID));
         }
 
@@ -69,6 +72,15 @@ namespace TaskMVC.Controllers
         {
             this.EmpRepo.Delete(ID);
             return RedirectToAction("Employee", "Home");
+        }
+
+
+
+
+        [HttpPost]
+        public JsonResult GetEmployee(int ID)
+        {
+            return Json(EmpRepo.Get(ID));
         }
     }
 }

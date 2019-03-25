@@ -31,12 +31,10 @@
                 @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                </ul>
+                <ul class="nav navbar-nav"></ul>
             </div>
         </div>
     </div>
-
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -44,11 +42,10 @@
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
-
     <script src="@Url.Content("~/Scripts/jquery-1.10.2.min.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
     <script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/moment.min.js")"></script>
     @RenderSection("Scripts", false)
-
 </body>
 </html>

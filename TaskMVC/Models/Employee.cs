@@ -13,8 +13,8 @@ namespace TaskMVC.Models
     {
         public int ID { get; set; }
 
-        [Required]
-        [StringLength(50)]
+        //[Required]
+        //[StringLength(50)]
         //[RegularExpression("/^[A-Z]+$/i")]
         public String Name { get; set; }
 

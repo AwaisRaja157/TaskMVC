@@ -4,14 +4,14 @@
 
     Employee employee = ViewBag.Employee as Employee;
 
-    employee.Name = "Zawar";
-    employee.DateOfBirth = DateTime.Now.AddYears(-25);
-    employee.GPA = 3;
-    employee.NDouble = 3.0;
-    employee.PocketMoney = 300000;
-    employee.Salary = 70000;
-    employee.TimeStamp = DateTime.Now;
-    employee.UrduName = "Zawar";
+    //employee.Name = "Zawar";
+    //employee.DateOfBirth = DateTime.Now.AddYears(-25);
+    //employee.GPA = 3;
+    //employee.NDouble = 3.0;
+    //employee.PocketMoney = 300000;
+    //employee.Salary = 70000;
+    //employee.TimeStamp = DateTime.Now;
+    //employee.UrduName = "Zawar";
 
 
     List<Employee> Employee = ViewBag.M as List<Employee>;
@@ -31,6 +31,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label>Name</label>
+                <input type="text" name="ID" value="0" id="ID" />
                 <input class="form-control" name="Name" id="Name" value="@employee.Name" />
                 <label id="NameLabel"></label>
             </div>
@@ -62,12 +63,7 @@
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="form-group">
-                <label>TimeStamp</label>
-                <input class="form-control" name="TimeStamp" id="TimeStamp" value="@employee.TimeStamp" />
-            </div>
-        </div>
+
         <div class="col-md-3">
             <div class="form-group">
                 <label>DateOfBirth</label>
@@ -94,7 +90,6 @@
             <th>PocketMoney</th>
             <th>NDouble</th>
             <th>GPA</th>
-            <th>TimeStamp</th>
             <th>DateOfBirth</th>
             <th>UrduName</th>
             <th>Action</th>
@@ -103,20 +98,17 @@
     <tbody id="TableBody">
         @foreach (var element in Employee)
         {
-            <tr>
+            <tr id="tr_@element.ID">
                 <td>@element.Name</td>
                 <td>@element.Salary</td>
                 <td>@element.PocketMoney</td>
                 <td>@element.NDouble</td>
                 <td>@element.GPA</td>
-                <td>@element.TimeStamp</td>
-                <td>@element.DateOfBirth</td>
+                <td>@(element.DateOfBirth?.ToString("yyyy-MM-dd"))</td>
                 <td>@element.UrduName</td>
                 <td>
-                    <a href="@Url.Action("Employee","Home" , new { ID = element.ID })"><i class="glyphicon glyphicon-pencil"></i></a>
-                    <form action="@Url.Action("DeleteEmployee", "Home" , new { ID = element.ID })" method="post">
-                        <button type="submit"><i class="glyphicon glyphicon-trash text-danger"></i></button>
-                    </form>
+                    <a href="#/" class="EditBtn" data-id="@element.ID"><i class="glyphicon glyphicon-pencil"></i></a>
+                    <a href="#/" class="DeleteBtn" data-id="@element.ID"><i class="glyphicon glyphicon-trash text-danger"></i></a>
                 </td>
             </tr>
         }
@@ -128,41 +120,55 @@
     <script>
         $(function () {
 
-
-            $("#MyForm").validate({
-                rules: {
-                    Name: {
-                        required: true,
-                        maxlength: 50
+            $("#TableBody").on("click", ".EditBtn", function () {
+                 var id = $(this).data("id");
+                $.ajax({
+                    url: "@Url.Action("GetEmployee", "Home")",
+                    method: "POST",
+                    data: {
+                        ID : id
+                    },
+                    success: function (resp) {
+                        $("#ID").val(resp.ID);
+                        $("#Name").val(resp.Name);
+                        $("#Salary").val(resp.Salary);
+                        $("#PocketMoney").val(resp.PocketMoney);
+                        $("#GPA").val(resp.GPA);
+                        $("#NDouble").val(resp.NDouble);
+                        $("#DateOfBirth").val((new moment(resp.DateOfBirth).format('YYYY-MM-DD')));
+                        $("#UrduName").val(resp.UrduName);
                     }
-                  
-                },
-                messages: {
-                    Name: {
-                        required : 'Name is required',
-                    }
-                }
-
-
+                });
             });
 
 
-            function FormatDate(jsonDate) {
-                var date = new Date(parseInt(jsonDate.substr(6)));
-                return date;
-            }
+            $("#TableBody").on("click", ".DeleteBtn", function () {
+                 var id = $(this).data("id");
+                $.ajax({
+                    url: "@Url.Action("DeleteEmployee", "Home")",
+                    method : "POST",
+                    data: {
+                        ID : id
+                    },
+                    success: function (resp) {
+                        $(`#tr_${id}`).remove();
+                    }
+
+                });
+            });
 
 
             $("#SubmitForm").click(function () {
 
-                if ($("#MyForm").valid()) {
+                var ID = $("#ID").val();
+                if ($("#MyForm").valid()) {               
                     var User = {
+                        ID : $("#ID").val(),
                         Name: $("#Name").val(),
                         Salary: $("#Salary").val(),
                         PocketMoney: $("#PocketMoney").val(),
                         GPA: $("#GPA").val(),
                         NDouble: $("#NDouble").val(),
-                        TimeStamp: $("#TimeStamp").val(),
                         DateOfBirth: $("#DateOfBirth").val(),
                         UrduName : $("#UrduName").val()
                     }
@@ -175,7 +181,12 @@
                         },
                         success: function (resp) {
                             console.log(resp);
-                            AddRow(resp);
+                            if (ID == 0) {
+                                AddRow(resp);
+                            } else {
+                                UpdateRow(resp);
+                            }
+                            
                         },
                         error: function (resp) {
 
@@ -185,27 +196,54 @@
             });
 
 
+
+
+
             function AddRow(element) {
                 var html = `
-     <tr>
+     <tr id='tr_${element.ID}'>
                 <td>${element.Name}</td>
                 <td>${element.Salary}</td>
                 <td>${element.PocketMoney}</td>
                 <td>${element.NDouble}</td>
                 <td>${element.GPA}</td>
-                <td>${element.TimeStamp}</td>
-                <td>${FormatDate(element.DateOfBirth)}</td>
+                <td>${new moment(element.DateOfBirth).format('YYYY-MM-DD')}</td>
                 <td>${element.UrduName}</td>
                 <td>
-                    <a href="@Url.Action("Employee","Home")/${element.ID}"><i class="glyphicon glyphicon-pencil"></i></a>
-                    <form action="@Url.Action("DeleteEmployee", "Home")/${element.ID}" method="post">
-                        <button type="submit"><i class="glyphicon glyphicon-trash text-danger"></i></button>
-                    </form>
+                    <a href="#/" class="EditBtn" data-id="${element.ID}"><i class="glyphicon glyphicon-pencil"></i></a>
+                    <a href="#/" class="DeleteBtn" data-id="${element.ID}"><i class="glyphicon glyphicon-trash text-danger"></i></a>
                 </td>
             </tr>
 
     `;
                 $("#TableBody").append(html);
+
+            }
+
+
+            
+
+
+            function UpdateRow(element) {
+            
+                var html = `
+     <tr id='tr_${element.ID}'>
+                <td>${element.Name}</td>
+                <td>${element.Salary}</td>
+                <td>${element.PocketMoney}</td>
+                <td>${element.NDouble}</td>
+                <td>${element.GPA}</td>
+                <td>${(new moment(element.DateOfBirth).format('YYYY-MM-DD'))}</td>
+                <td>${element.UrduName}</td>
+                <td>
+                     <a href="#/" class="EditBtn" data-id="${element.ID}"><i class="glyphicon glyphicon-pencil"></i></a>
+                     <a href="#/" class="DeleteBtn" data-id="${element.ID}"><i class="glyphicon glyphicon-trash text-danger"></i></a>
+                </td>
+            </tr>
+
+    `;
+                $(`#tr_${element.ID}`).replaceWith(html);
+               /// $("#TableBody").append(html);
 
             }
 

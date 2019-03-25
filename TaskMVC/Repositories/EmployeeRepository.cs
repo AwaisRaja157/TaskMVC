@@ -21,7 +21,6 @@ namespace TaskMVC.Repositories
            ,[PocketMoney]
            ,[GPA]
            ,[NDouble]
-           ,[TimeStamp]
            ,[DateOfBirth]
            ,[UrduName])
      VALUES
@@ -31,8 +30,7 @@ namespace TaskMVC.Repositories
            ,'{employee.PocketMoney}'
            ,'{employee.GPA}'
            ,'{employee.NDouble}'
-           ,'{employee.TimeStamp}'
-           ,'{employee.DateOfBirth}'
+           ,'{employee.DateOfBirth?.ToString("yyyy-MM-dd")}'
            ,N'{employee.UrduName}'
 ); SELECT SCOPE_IDENTITY();";
             con.Open();
@@ -55,7 +53,6 @@ UPDATE [dbo].[Employee]
       ,[PocketMoney] = '{employee.PocketMoney}'
       ,[GPA] = '{employee.GPA}'
       ,[NDouble] = '{employee.NDouble}'
-      ,[TimeStamp] = '{employee.TimeStamp}'
       ,[DateOfBirth] = '{employee.DateOfBirth}'
       ,[UrduName] = '{employee.UrduName}'
  WHERE ID = {employee.ID}";
